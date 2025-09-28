@@ -1,0 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:todo_app/add_todo_screen.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/models/todo_model.dart';
+import 'package:todo_app/todos_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(TodoModelAdapter());
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(title: 'Flutter Demo', home: TodosScreen());
+  }
+}
