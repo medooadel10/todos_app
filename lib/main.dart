@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/add_todo_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/models/todo_model.dart';
 import 'package:todo_app/todos_screen.dart';
