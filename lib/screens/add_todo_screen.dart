@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/models/todo_model.dart';
 import 'package:todo_app/providers/add_todo_provider.dart';
 
 class AddTodoScreen extends StatelessWidget {
-  const AddTodoScreen({Key? key}) : super(key: key);
+  final TodoModel? todo;
+  final int? index;
+  const AddTodoScreen({Key? key, this.todo, this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => AddTodoProvider(),
+      create: (context) => AddTodoProvider()..fillData(todo),
       builder: (context, child) {
         final provider = context.read<AddTodoProvider>();
         return Scaffold(
-          appBar: AppBar(title: Text('Add ToDO')),
+          appBar: AppBar(
+            title: Text(todo != null ? 'Update Todo' : 'Add Todo'),
+          ),
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(14.0),
@@ -75,11 +80,15 @@ class AddTodoScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         if (provider.formKey.currentState!.validate()) {
-                          provider.addTodo(context);
+                          if (todo != null) {
+                            provider.updateTodo(context, todo!, index!);
+                          } else {
+                            provider.addTodo(context);
+                          }
                         }
                       },
                       child: Text(
-                        'Add Todo',
+                        todo != null ? 'Update Todo' : 'Add Todo',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
